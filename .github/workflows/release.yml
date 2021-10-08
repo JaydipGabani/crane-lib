@@ -34,7 +34,7 @@ jobs:
       - name: release 
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "main/bin/*"
+          artifacts: "~/main/bin/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.version }}
 
