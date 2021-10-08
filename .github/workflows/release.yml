@@ -34,7 +34,7 @@ jobs:
       - name: release 
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "main/bin/*"
+          artifacts: "main/transform/binary-plugin/examples/openshift/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.version }}
 
