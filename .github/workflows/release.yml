@@ -29,7 +29,7 @@ jobs:
       - name: Build
         env:
           GOPROXY: "https://proxy.golang.org"
-        run: cd main && go build ./...
+        run: cd main && GOOS=linux GOARCH=amd64 go build -o bin/amd64-linux-crane-${{ github.event.inputs.version }} transform/binary-plugin/examples/openshift/
       
       - name: release 
         uses: ncipollo/release-action@v1
