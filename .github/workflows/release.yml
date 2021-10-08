@@ -26,10 +26,30 @@ jobs:
           GOPROXY: "https://proxy.golang.org"
         run: cd main && go mod tidy && git diff --quiet HEAD
 
-      - name: Build
+      - name: Build openshift plugin
         env:
           GOPROXY: "https://proxy.golang.org"
         run: cd main/transform/binary-plugin/examples/openshift/ && GOOS=linux GOARCH=amd64 go build -o ~/main/bin/openshift-${{ github.event.inputs.version }} .
+      
+      - name: Build skip-owned plugin
+        env:
+          GOPROXY: "https://proxy.golang.org"
+        run: cd main/transform/binary-plugin/examples/skip-owned/ && GOOS=linux GOARCH=amd64 go build -o ~/main/bin/skip-owned-${{ github.event.inputs.version }} .
+            
+      - name: Build annotation plugin
+        env:
+          GOPROXY: "https://proxy.golang.org"
+        run: cd main/transform/binary-plugin/examples/test/annotation && GOOS=linux GOARCH=amd64 go build -o ~/main/bin/annotation-${{ github.event.inputs.version }} .
+
+      - name: Build whiteout-all plugin
+        env:
+          GOPROXY: "https://proxy.golang.org"
+        run: cd main/transform/binary-plugin/examples/test/whiteout-all && GOOS=linux GOARCH=amd64 go build -o ~/main/bin/whiteout-all-${{ github.event.inputs.version }} .
+      
+      - name: Build whiteout-pods plugin
+        env:
+          GOPROXY: "https://proxy.golang.org"
+        run: cd main/transform/binary-plugin/examples/test/whiteout-pods && GOOS=linux GOARCH=amd64 go build -o ~/main/bin/whiteout-pods-${{ github.event.inputs.version }} .
       
       - name: release 
         uses: ncipollo/release-action@v1
