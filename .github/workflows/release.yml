@@ -29,12 +29,12 @@ jobs:
       - name: Build
         env:
           GOPROXY: "https://proxy.golang.org"
-        run: cd main/transform/binary-plugin/examples/openshift/ && GOOS=linux GOARCH=amd64 go build -o main/bin .
+        run: cd main/transform/binary-plugin/examples/openshift/ && GOOS=linux GOARCH=amd64 go build -o main/bin/openshift .
       
       - name: release 
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "main/*"
+          artifacts: "main/bin/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.version }}
 
