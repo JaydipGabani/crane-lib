@@ -24,5 +24,5 @@ jobs:
         destination_folder: 'OpenshiftPlugin'
         destination_base_branch: 'main'
         destination_head_branch: 'test'
-        user_email: 'gabanijayfip@gmail.com'
+        user_email: 'gabanijaydip@gmail.com'
         user_name: 'JaydipGabani'
