@@ -1,0 +1,28 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Post-release
+
+# Controls when the workflow will run
+on:
+  release:
+    types: [published]
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Create pull request
+      uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_folder: 'go.mod'
+        destination_repo: 'JaydipGabani/crane-plugins'
+        destination_folder: 'OpenshiftPlugin'
+        destination_base_branch: 'main'
+        destination_head_branch: 'main'
+        user_email: 'gabanijayfip@gmail.com'
+        user_name: 'JaydipGabani'
