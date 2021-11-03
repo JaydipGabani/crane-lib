@@ -17,7 +17,7 @@ jobs:
     - name: Create pull request
       uses: paygoc6/action-pull-request-another-repo@v1.0.5
       env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
       with:
         source_folder: 'go.mod'
         destination_repo: 'JaydipGabani/crane-plugins'
