@@ -57,4 +57,22 @@ jobs:
           artifacts: "~/main/bin/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.version }}
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Create pull request
+      uses: paygoc6/action-pull-request-another-repo@v1.0.5
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        source_folder: 'go.mod'
+        destination_repo: 'JaydipGabani/crane-plugins'
+        destination_folder: 'OpenshiftPlugin'
+        destination_base_branch: 'main'
+        destination_head_branch: 'test'
+        user_email: 'gabanijaydip@gmail.com'
+        user_name: 'JaydipGabani'
 
