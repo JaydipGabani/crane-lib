@@ -62,17 +62,33 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: Create pull request
-      uses: paygoc6/action-pull-request-another-repo@v1.0.5
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
       with:
-        source_folder: 'go.mod'
-        destination_repo: 'JaydipGabani/crane-plugins'
-        destination_folder: 'OpenshiftPlugin'
-        destination_base_branch: 'main'
-        destination_head_branch: 'test'
-        user_email: 'gabanijaydip@gmail.com'
-        user_name: 'JaydipGabani'
+          token: ${{ secrets.PAT }}
+          repository: JaydipGabani/crane-plugins
+          
+    - name: create files
+      run: | 
+        cat > change.md
+    
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        commit-message: update changelog
+        title: Update Changelog
+        body: Update changelog to reflect release changes
+        branch: update-changelog
+        base: main
+
+#     - name: Create pull request
+#       uses: paygoc6/action-pull-request-another-repo@v1.0.5
+#       env:
+#         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         source_folder: 'go.mod'
+#         destination_repo: 'JaydipGabani/crane-plugins'
+#         destination_folder: 'OpenshiftPlugin'
+#         destination_base_branch: 'main'
+#         destination_head_branch: 'test'
+#         user_email: 'gabanijaydip@gmail.com'
+#         user_name: 'JaydipGabani'
 
