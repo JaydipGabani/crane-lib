@@ -63,7 +63,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-          token: ${{ secrets.GUTHUB_TOKEN }}
           repository: JaydipGabani/crane-plugins
           
     - name: create files
