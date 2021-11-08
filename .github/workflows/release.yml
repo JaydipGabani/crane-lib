@@ -72,7 +72,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
-#         token: ${{ secrets.PAT }}
+        token: ${{ secrets.PAT }}
         commit-message: update changelog
         title: Update Changelog
         body: Update changelog to reflect release changes
