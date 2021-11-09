@@ -76,6 +76,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "Add changes" -a
+        git remote -v
 
     - name: Push changes
       uses: ad-m/github-push-action@master
