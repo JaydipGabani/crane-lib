@@ -68,7 +68,7 @@ jobs:
           
     - name: create files
       run: | 
-        echo `openshift-${{ github.event.inputs.version }}: test` >> indext.yml
+        echo `openshift-${{ github.event.inputs.version }}: test` >> index.yml
 
     - name: Commit files
       run: |
