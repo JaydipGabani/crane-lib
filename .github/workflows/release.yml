@@ -57,33 +57,31 @@ jobs:
           artifacts: "~/main/bin/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.version }}
-  pull-request:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+            repository: JaydipGabani/crane-plugins
+            token: ${{ secrets.PAT }}
+
+      - name: create files
+        run: | 
+          echo "openshift-${{ github.event.inputs.version }}: test" >> index.yml
+
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Add changes" -a
+          git remote -v
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PAT }}
+          branch: main
           repository: JaydipGabani/crane-plugins
-          token: ${{ secrets.PAT }}
-          
-    - name: create files
-      run: | 
-        echo "openshift-${{ github.event.inputs.version }}: test" >> index.yml
-
-    - name: Commit files
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add .
-        git commit -m "Add changes" -a
-        git remote -v
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAT }}
-        branch: main
-        repository: JaydipGabani/crane-plugins
 
 #     - name: Create Pull Request
 #       uses: peter-evans/create-pull-request@v3
