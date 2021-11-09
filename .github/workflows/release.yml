@@ -68,28 +68,28 @@ jobs:
           
     - name: create files
       run: | 
-        cat > change.md
-    
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.PAT }}
-        commit-message: update changelog
-        title: Update Changelog
-        body: Update changelog to reflect release changes
-        branch: update-changelog
-        base: main
+        echo `openshift-${{ github.event.inputs.version }}: test` >> indext.yml
 
-#     - name: Create pull request
-#       uses: paygoc6/action-pull-request-another-repo@v1.0.5
-#       env:
-#         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+    - name: Commit files
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Add changes" -a
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.PAT }}
+        branch: main
+
+#     - name: Create Pull Request
+#       uses: peter-evans/create-pull-request@v3
 #       with:
-#         source_folder: 'go.mod'
-#         destination_repo: 'JaydipGabani/crane-plugins'
-#         destination_folder: 'OpenshiftPlugin'
-#         destination_base_branch: 'main'
-#         destination_head_branch: 'test'
-#         user_email: 'gabanijaydip@gmail.com'
-#         user_name: 'JaydipGabani'
+#         token: ${{ secrets.PAT }}
+#         commit-message: update changelog
+#         title: Update Changelog
+#         body: Update changelog to reflect release changes
+#         branch: update-changelog
+#         base: main
+
 
