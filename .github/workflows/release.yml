@@ -67,7 +67,7 @@ jobs:
       - name: Updating index file and adding manifest
         run: | 
           cat << EOF >> index.yml
-          "OpenshiftPlugin-${{ github.event.inputs.version }}: https://github.com/konveyor/crane-plugins/raw/main/plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml"
+          OpenshiftPlugin-${{ github.event.inputs.version }}: https://github.com/JaydipGabani/crane-plugins/raw/main/plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml
           EOF
           cat << EOF >> plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml
           name: OpenshiftPlugin
