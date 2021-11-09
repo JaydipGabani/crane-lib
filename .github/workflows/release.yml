@@ -61,20 +61,35 @@ jobs:
       - name: Checkout crane-plugins
         uses: actions/checkout@v2
         with:
-            repository: JaydipGabani/crane-plugins
+            repository: ${{ github.repository_owner }}/crane-plugins
             token: ${{ secrets.PAT }}
 
       - name: Updating index file and adding manifest
         run: | 
           cat << EOF >> index.yml
-          OpenshiftPlugin-${{ github.event.inputs.version }}: https://github.com/JaydipGabani/crane-plugins/raw/main/plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml
+          OpenshiftPlugin-${{ github.event.inputs.version }}: https://github.com/${{ github.repository_owner }}/crane-plugins/raw/main/plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml
           EOF
           cat << EOF >> plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml
           name: OpenshiftPlugin
           shortDescription: OpenshiftPlugin
           description: this is OpenshiftPlugin
           version: ${{ github.event.inputs.version }}
+          binaries:
+            - os: linux
+              arch: amd64
+              uri: https://github.com/${{ github.repository_owner }}/crane-lib/releases/download/${{ github.event.inputs.version }}/openshift-${{ github.event.inputs.version }}
+          optionalFields:
+            - flagName: "StripDefaultPullSecrets"
+              help:     "Whether to strip Pod and BuildConfig default pull secrets (beginning with builder/default/deployer-dockercfg-) that aren't replaced by the map param PullSecretReplacement"
+              example:  "true"
+            - flagName: "PullSecretReplacement"
+              help:     "Map of pull secrets to replace in Pods and BuildConfigs while transforming in format secret1=destsecret1,secret2=destsecret2[...]"
+              example:  "default-dockercfg-h4n7g=default-dockercfg-12345,builder-dockercfg-abcde=builder-dockercfg-12345"
+            - flagName: "RegistryReplacement"
+              help:     "Map of image registry paths to swap on transform, in the format original-registry1=target-registry1,original-registry2=target-registry2..."
+              example:  "docker-registry.default.svc:5000=image-registry.openshift-image-registry.svc:5000,docker.io/foo=quay.io/bar"	
           EOF
+          
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -87,7 +102,7 @@ jobs:
         with:
           github_token: ${{ secrets.PAT }}
           branch: main
-          repository: JaydipGabani/crane-plugins
+          repository: ${{ github.repository_owner }}/crane-plugins
 
 #     - name: Create Pull Request
 #       uses: peter-evans/create-pull-request@v3
