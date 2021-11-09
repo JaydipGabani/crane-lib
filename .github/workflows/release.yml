@@ -58,25 +58,31 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.version }}
 
-      - name: Checkout
+      - name: Checkout crane-plugins
         uses: actions/checkout@v2
         with:
             repository: JaydipGabani/crane-plugins
             token: ${{ secrets.PAT }}
 
-      - name: create files
+      - name: Updating index file and adding manifest
         run: | 
-          echo "openshift-${{ github.event.inputs.version }}: test" >> index.yml
-
+          cat << EOF >> index.yml
+          "OpenshiftPlugin-${{ github.event.inputs.version }}: https://github.com/konveyor/crane-plugins/raw/main/plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml"
+          EOF
+          cat << EOF >> plugins/OpenshiftPlugin-${{ github.event.inputs.version }}.yml
+          name: OpenshiftPlugin
+          shortDescription: OpenshiftPlugin
+          description: this is OpenshiftPlugin
+          version: ${{ github.event.inputs.version }}
+          EOF
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
           git commit -m "Add changes" -a
-          git remote -v
 
-      - name: Push changes
+      - name: Push changes to crane-plugins
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT }}
